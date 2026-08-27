@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
@@ -40,6 +41,15 @@ public_users.post("/register", (req, res) => {
 public_users.get('/', function (req, res) {
     res.send(JSON.stringify(books, null, 4));
 });
+
+async function getAllBooks() {
+    try {
+        const response = await axios.get('http://localhost:5000/');
+        return response.data;
+    } catch (error) {
+        console.error("Error getting books:", error.message);
+    }
+}
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn', function (req, res) {
