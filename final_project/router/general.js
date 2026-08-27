@@ -112,6 +112,19 @@ public_users.get('/title/:title', function (req, res) {
     res.send(JSON.stringify(result, null, 4));
 });
 
+//Task 13
+async function getBooksByTitle(title) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/title/${encodeURIComponent(title)}`
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error("Error getting books by title:", error.message);
+    }
+}
+
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
     let isbn = req.params.isbn;
